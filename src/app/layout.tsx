@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Header from "@/components/Header";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,9 +15,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Devrex - start your dev journey",
+  title: "DeVerse - diverse dev journey",
   description:
-    "Devrex - start your dev journey. A resource hub to kickstart your journey, get all the resources/information you need to start you development at on place- Devrex",
+    "DeVerse - start your dev journey. A resource hub to kickstart your journey, get all the resources/information you need to start you development at on place- Devrex",
 };
 
 export default function RootLayout({
@@ -29,7 +30,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <>
+          <Header />
+          {children}
+        </>
       </body>
     </html>
   );
