@@ -1,5 +1,5 @@
 import React from "react";
-import { BinaryIcon, FileStack, Hourglass, TrainTrack, X } from "lucide-react";
+import { FileStack, Hourglass, TrainTrack } from "lucide-react";
 
 export default function Objectives() {
   const features = [

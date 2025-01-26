@@ -15,7 +15,7 @@ export default function Home() {
             deVerse
           </h4>
           <p className="text-lg font-normal text-gray-400 text-center">
-            "Discover, Learn, and Grow with curated content for tech enthusiasts
+            Discover, Learn, and Grow with curated content for tech enthusiasts
             and beginners. From blogs to video tutorials, we have everything you
             need to kickstart and elevate your tech journey.
           </p>
