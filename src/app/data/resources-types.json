@@ -1,0 +1,82 @@
+{
+  "technologies": {
+    "frontend": {
+      "name": "Frontend Dev",
+      "stack": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Angular",
+        "Tailwind CSS",
+        "Bootstrap"
+      ]
+    },
+    "backend": {
+      "name": "Backend Dev.",
+      "stack": ["Node.js", "Express.js", "Django", "Flask", "Spring Boot"]
+    },
+    "ai": {
+      "name": "Artificial Intelligence",
+      "stack": [
+        "TensorFlow",
+        "PyTorch",
+        "OpenAI API",
+        "Hugging Face",
+        "Keras",
+        "ChatGPT API",
+        "DeepMind",
+        "Scikit-learn",
+        "NLP Libraries",
+        "Reinforcement Learning Frameworks"
+      ]
+    },
+    "ml": {
+      "name": "Machine Learning",
+      "stack": [
+        "NumPy",
+        "Pandas",
+        "Scikit-learn",
+        "Matplotlib",
+        "Seaborn",
+        "XGBoost",
+        "LightGBM",
+        "CatBoost",
+        "MLflow",
+        "Google Colab"
+      ]
+    },
+    "dsa": {
+      "name": "Data Structures and Algorithms",
+      "stack": [
+        "Arrays",
+        "Linked Lists",
+        "Stacks",
+        "Queues",
+        "Trees",
+        "Graphs",
+        "Dynamic Programming",
+        "Sorting Algorithms",
+        "Searching Algorithms",
+        "Hashing"
+      ]
+    },
+    "deployments": {
+      "name": "Deployments and DevOps",
+      "stack": [
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "Google Cloud",
+        "Azure",
+        "Vercel",
+        "Netlify",
+        "Heroku",
+        "Nginx",
+        "GitHub Actions"
+      ]
+    }
+  }
+}

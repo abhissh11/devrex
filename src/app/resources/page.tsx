@@ -2,45 +2,101 @@
 import Dashboard from "@/components/Dashboard";
 import SearchBox from "@/components/SearchBox";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import resourcesData from "@/app/data/resources-types.json";
+import { Technologies } from "../../../types/Technologies";
 
 export default function Page() {
   const [showDash, setShowDash] = useState(false);
+  const [selectedCategory, setSelectedCategory] =
+    useState<keyof Technologies>("frontend");
+  const chevronRef = useRef<HTMLDivElement>(null);
 
   const handleClick = () => {
     setShowDash((prev) => !prev);
   };
 
+  // Handle category selection
+  const handleSelectCategory = (category: keyof Technologies) => {
+    setSelectedCategory(category);
+    setShowDash(false);
+  };
+
+  // Get the selected category data from the JSON
+  const selectedCategoryData = resourcesData.technologies[selectedCategory];
+
+  const getSidebarHeight = () => {
+    if (chevronRef.current) {
+      const chevronRect = chevronRef.current.getBoundingClientRect();
+      const remainingHeight = window.innerHeight - chevronRect.bottom;
+      return remainingHeight;
+    }
+    return 0;
+  };
+
   return (
-    <div className="bg-base min-h-screen w-full text-white flex flex-col md:flex-row">
+    <div className="bg-base min-h-[100svh] pb-20 w-full text-white flex flex-col md:flex-row">
       {/* Sidebar for larger screens */}
-      <div className="hidden md:block w-1/5">
-        <Dashboard />
+      <div className="hidden md:block fixed h-screen z-50 w-1/5">
+        <Dashboard onSelectCategory={handleSelectCategory} />
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow relative w-full md:w-4/5 bg-base pt-16 px-6">
-        {/* Search Box */}
+      <div className="flex-grow relative w-full md:w-4/5 bg-base pt-16 px-6 md:ml-[20%]">
         <SearchBox />
 
-        {/* Chevron for small screens */}
-        <div className="bg-slate-950 py-2 px-4 rounded-lg md:hidden flex justify-end mt-4">
-          <ChevronDown
-            size={36}
-            onClick={handleClick}
-            className="cursor-pointer bg-base p-2 rounded-lg"
-          />
+        <div
+          ref={chevronRef}
+          className="bg-chase py-2 px-4 rounded-lg md:hidden flex justify-between items-center mt-4"
+        >
+          <p>Toggle Dashboard Here..</p>
+          {showDash ? (
+            <ChevronDown
+              size={36}
+              onClick={handleClick}
+              className="cursor-pointer bg-base p-2 rounded-lg rotate-180"
+            />
+          ) : (
+            <ChevronDown
+              size={36}
+              onClick={handleClick}
+              className="cursor-pointer bg-base p-2 rounded-lg"
+            />
+          )}
         </div>
 
         {/* Toggleable Sidebar for Small Screens */}
         {showDash && (
           <div
-            className="absolute top-20 left-0 w-4/5 sm:w-3/5 h-[calc(100vh-5rem)]  p-4 rounded-lg shadow-lg 
-            z-50 overflow-y-auto"
+            className="fixed left-0 w-full sm:w-3/5 bg-base rounded-lg shadow-lg z-50 overflow-y-auto"
+            style={{
+              top: chevronRef.current?.getBoundingClientRect().bottom,
+              height: getSidebarHeight(),
+            }}
           >
-            <Dashboard />
+            <Dashboard onSelectCategory={handleSelectCategory} />
           </div>
         )}
+
+        {/* Main Content Area */}
+        <div className="mt-8">
+          <h1 className="text-2xl font-bold">{selectedCategoryData.name}</h1>
+          <p className="mt-4">
+            Available best resources for {selectedCategoryData.name} are:
+          </p>
+          {/* Display fetched content */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {selectedCategoryData.stack.map((item, index) => (
+              <div
+                key={index}
+                className="p-6 bg-chase text-white rounded-lg shadow-md hover:shadow-lg duration-100 cursor-pointer
+                hover:-translate-y-1 transition-all"
+              >
+                <h2 className="text-xl font-semibold">{item}</h2>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
