@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { MoveUpLeft } from "lucide-react";
 import Link from "next/link";
+import ResourceCardSkeleton from "@/components/ResourceCardSkeleton";
 
 interface Resource {
   name: string;
@@ -41,14 +42,47 @@ export default function StackPage() {
     }
   }, [stack]);
 
-  if (loading)
+  // Show loading state first
+  if (loading) {
     return (
-      <div className="bg-base flex justify-center items-center h-screen">
-        <p className="text-center text-white mt-10">Loading...</p>;
+      <div className="bg-base min-h-screen py-20 px-6 md:px-28 text-white p-6">
+        <p className="mt-4">Best resources for {stack}:</p>
+
+        {/* Show skeleton cards while loading */}
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <ResourceCardSkeleton key={index} />
+          ))}
+        </div>
+
+        <div className="flex justify-between gap-2 items-center">
+          <h1 className="text-xl text-white font-bold capitalize">
+            {stack} Resources failed to Load..
+          </h1>
+          <Link href={"/resources"}>
+            <button className="text-lg bg-chase flex gap-1 items-center rounded-lg px-4 py-2 md:px-6 md:py-3 group ">
+              <span className="bg-blue-500 p-1 rounded-full group-hover:-rotate-45 group-hover:bg-blue-600 transition-all duration-100">
+                <MoveUpLeft />
+              </span>
+              Go to Dashboard
+            </button>
+          </Link>
+        </div>
       </div>
     );
-  if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
-  if (!data || data.length === 0)
+  }
+
+  // Show error state if there's an error
+  if (error) {
+    return (
+      <div className="bg-base flex justify-center items-center h-screen">
+        <p className="text-center text-red-500">{error}</p>
+      </div>
+    );
+  }
+
+  // Show empty state if no data is found
+  if (!data || data.length === 0) {
     return (
       <div className="bg-base flex flex-col gap-8 justify-center items-center py-40 h-screen">
         <p className="text-center text-lg mt-10 text-white">
@@ -64,7 +98,9 @@ export default function StackPage() {
         </Link>
       </div>
     );
+  }
 
+  // Show actual resource cards when data is loaded
   return (
     <div className="bg-base min-h-screen py-20 px-6 md:px-28 text-white p-6">
       <div className="flex justify-between gap-2 items-center">
