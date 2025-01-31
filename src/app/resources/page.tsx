@@ -2,15 +2,17 @@
 import Dashboard from "@/components/Dashboard";
 import SearchBox from "@/components/SearchBox";
 import { ChevronDown } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import resourcesData from "@/app/data/resources-types.json";
 import { Technologies } from "../../../types/Technologies";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [showDash, setShowDash] = useState(false);
   const [selectedCategory, setSelectedCategory] =
     useState<keyof Technologies>("frontend");
   const chevronRef = useRef<HTMLDivElement>(null);
+  const [sidebarHeight, setSidebarHeight] = useState(0);
 
   const handleClick = () => {
     setShowDash((prev) => !prev);
@@ -25,14 +27,22 @@ export default function Page() {
   // Get the selected category data from the JSON
   const selectedCategoryData = resourcesData.technologies[selectedCategory];
 
-  const getSidebarHeight = () => {
-    if (chevronRef.current) {
-      const chevronRect = chevronRef.current.getBoundingClientRect();
-      const remainingHeight = window.innerHeight - chevronRect.bottom;
-      return remainingHeight;
-    }
-    return 0;
-  };
+  const router = useRouter();
+
+  // Calculate sidebar height on window resize
+  useEffect(() => {
+    const updateSidebarHeight = () => {
+      if (chevronRef.current) {
+        const chevronRect = chevronRef.current.getBoundingClientRect();
+        const remainingHeight = window.innerHeight - chevronRect.bottom;
+        setSidebarHeight(remainingHeight);
+      }
+    };
+
+    updateSidebarHeight();
+    window.addEventListener("resize", updateSidebarHeight);
+    return () => window.removeEventListener("resize", updateSidebarHeight);
+  }, []);
 
   return (
     <div className="bg-base min-h-[100svh] pb-20 w-full text-white flex flex-col md:flex-row">
@@ -71,7 +81,7 @@ export default function Page() {
             className="fixed left-0 w-full sm:w-3/5 bg-base rounded-lg shadow-lg z-50 overflow-y-auto"
             style={{
               top: chevronRef.current?.getBoundingClientRect().bottom,
-              height: getSidebarHeight(),
+              height: sidebarHeight,
             }}
           >
             <Dashboard onSelectCategory={handleSelectCategory} />
@@ -89,8 +99,14 @@ export default function Page() {
             {selectedCategoryData.stack.map((item, index) => (
               <div
                 key={index}
-                className="p-6 bg-chase text-white rounded-lg shadow-md hover:shadow-lg duration-100 cursor-pointer
-                hover:-translate-y-1 transition-all"
+                onClick={() => {
+                  try {
+                    router.push(`/resources/${item.toLowerCase()}`);
+                  } catch (error) {
+                    console.error("Navigation error:", error);
+                  }
+                }}
+                className="p-6 bg-chase text-white rounded-lg shadow-md hover:shadow-lg duration-100 cursor-pointer hover:-translate-y-1 transition-all"
               >
                 <h2 className="text-xl font-semibold">{item}</h2>
               </div>
