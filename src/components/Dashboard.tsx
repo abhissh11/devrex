@@ -1,6 +1,7 @@
 import React from "react";
 import resourcesData from "@/app/data/resources-types.json"; // Import the JSON file
 import { Technologies } from "../../types/Technologies"; // Import the type
+import Link from "next/link";
 
 interface DashboardProps {
   onSelectCategory: (category: keyof Technologies) => void;
@@ -30,9 +31,11 @@ export default function Dashboard({ onSelectCategory }: DashboardProps) {
 
         {/* User Information */}
         <div className="w-full">
-          <button className="px-2 py-2 rounded-lg bg-blue-600 w-full text-sm text-center hover:bg-blue-700">
-            abc@gmail.com
-          </button>
+          <Link href="post-resources">
+            <button className="px-2 py-2 rounded-lg bg-blue-600 w-full text-sm text-center hover:bg-blue-700">
+              Post Resources
+            </button>
+          </Link>
         </div>
       </div>
     </div>
