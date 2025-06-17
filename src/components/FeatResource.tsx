@@ -1,11 +1,4 @@
-import {
-  Book,
-  CornerDownRight,
-  ListVideo,
-  MoveRight,
-  Users,
-  Video,
-} from "lucide-react";
+import { Book, ListVideo, MoveRight, Users } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 

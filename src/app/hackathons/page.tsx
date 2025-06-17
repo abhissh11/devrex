@@ -44,11 +44,11 @@ export default function HackathonsPage() {
         <p className="text-lg font-normal text-gray-300">
           At UniHive, we believe that innovation thrives in a community of
           curious minds, creative problem solvers, and passionate technologists.
-          Our hackathons are not just competitions — they're launchpads for
+          Our hackathons are not just competitions — they are launchpads for
           ideas, a space to learn, collaborate, and build the future.
         </p>
         <p className="text-lg font-normal text-gray-300">
-          Whether you're an AI enthusiast, a blockchain builder, a cloud
+          Whether you are an AI enthusiast, a blockchain builder, a cloud
           architect, or a complete beginner eager to explore tech — our
           hackathons are designed for everyone. Each challenge is carefully
           crafted to simulate real-world scenarios, pushing your skills while
